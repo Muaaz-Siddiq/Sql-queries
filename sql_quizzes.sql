@@ -115,3 +115,30 @@ FROM STATION;
 Note: CITY.CountryCode and COUNTRY.Code are matching key columns.*/
 SELECT SUM(ci.POPULATION) FROM CITY as ci INNER JOIN COUNTRY as ct ON
 ci.COUNTRYCODE = ct.CODE WHERE ct.CONTINENT = 'ASIA';
+
+
+/*Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.*/
+SELECT ci.NAME FROM CITY as ci INNER JOIN COUNTRY as ct ON
+ci.COUNTRYCODE = ct.CODE WHERE ct.CONTINENT = 'AFRICA';
+
+/*Given the CITY and COUNTRY tables, query the names of all the continents (COUNTRY.Continent) and their respective average city populations (CITY.Population) rounded down to the nearest integer.*/\
+SELECT ct.CONTINENT, FLOOR(AVG(ci.POPULATION)) AS av FROM CITY AS ci INNER JOIN COUNTRY AS ct
+ON ci.COUNTRYCODE = ct.CODE
+GROUP BY ct.CONTINENT ORDER BY av ASC
+
+/*Ketty gives Eve a task to generate a report containing three 
+columns: Name, Grade and Mark. Ketty doesn't want the NAMES of those students who received a grade 
+lower than 8. The report must be in descending order by grade -- i.e. higher grades are entered first. 
+If there is more than one student with the same grade (8-10) assigned to them, order those 
+particular students by their name alphabetically. Finally, if the grade is lower than 8, use 
+"NULL" as their name and list them by their grades in descending order. 
+If there is more than one student with the same grade (1-7) assigned to them, 
+order those particular students by their marks in ascending order.*/
+
+SELECT 
+    CASE
+        WHEN gr.grade >= 8 THEN st.NAME
+        ELSE 'NULL'
+    END AS Stu_Name, gr.GRADE, st.MARKS 
+FROM STUDENTS AS st JOIN GRADES AS gr ON st.marks BETWEEN gr.MIN_MARK AND gr.MAX_MARK
+ORDER BY gr.GRADE DESC, Stu_Name ASC, st.MARKS ASC
