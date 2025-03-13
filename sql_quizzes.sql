@@ -100,3 +100,18 @@ WHERE LAT_N = (SELECT MIN(LAT_N) FROM STATION
 Query the Manhattan Distance between points  and  and round it to a scale of  decimal places.*/
 
 SELECT ROUND(ABS(MAX(LAT_N) - MIN(LAT_N)) + ABS(MAX(LONG_W) - MIN(LONG_W)), 4);
+
+/*Consider  and  to be two points on a 2D plane where  are the respective minimum and maximum values of Northern Latitude (LAT_N) and  are the respective minimum and maximum values of Western Longitude (LONG_W) in STATION.
+
+Query the Euclidean Distance between points  and  and format your answer to display  decimal digits.*/
+SELECT TRUNCATE( 
+    SQRT (
+        POWER(MAX(LAT_N) - MIN(LAT_N),2) + POWER(MAX(LONG_W) - MIN(LONG_W),2)
+    ), 4) 
+FROM STATION;
+
+/*Given the CITY and COUNTRY tables, query the sum of the populations of all cities where the CONTINENT is 'Asia'.
+
+Note: CITY.CountryCode and COUNTRY.Code are matching key columns.*/
+SELECT SUM(ci.POPULATION) FROM CITY as ci INNER JOIN COUNTRY as ct ON
+ci.COUNTRYCODE = ct.CODE WHERE ct.CONTINENT = 'ASIA';
