@@ -66,3 +66,18 @@ SELECT CEIL(ROUND(AVG(SALARY) - AVG(REPLACE(SALARY, '0', '')), 2)) FROM EMPLOYEE
 Then print these values as  space-separated integers.*/
 SELECT MAX(salary*months), COUNT(*) FROM EMPLOYEE
 WHERE salary*months = (SELECT MAX(salary*months) FROM EMPLOYEE);
+
+/*Query the sum of Northern Latitudes (LAT_N) from STATION having values greater than  and less than .
+Truncate your answer to  decimal places.*/
+SELECT TRUNCATE(SUM(LAT_N), 4)
+FROM STATION 
+WHERE LAT_N BETWEEN 38.7880 AND 137.2345;
+
+/*Query the greatest value of the Northern Latitudes (LAT_N) from STATION that is less than . Truncate your answer to  decimal places.*/
+SELECT MAX(TRUNCATE(LAT_N, 4)) FROM STATION
+WHERE LAT_N < 137.2345;
+
+/*Query the Western Longitude (LONG_W) for the largest Northern Latitude (LAT_N) in STATION that is less than . Round your answer to  decimal places.*/
+SELECT ROUND(LONG_W,4) FROM STATION
+WHERE LAT_N = (SELECT MAX(LAT_N) FROM STATION 
+               WHERE LAT_N < 137.2345);
